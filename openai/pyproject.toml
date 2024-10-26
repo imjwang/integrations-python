@@ -15,7 +15,7 @@ include = ["src/py.typed"]
 python = "^3.8"
 openai = "^1.52.0"
 pydantic = "^2.9.2"
-restack-ai = "^0.0.10"
+restack-ai = "^0.0.11"
 
 
 [build-system]
