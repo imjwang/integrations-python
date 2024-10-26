@@ -15,7 +15,7 @@ include = ["src/py.typed"]
 python = "^3.8"
 openai = "^1.52.0"
 pydantic = "^2.9.2"
-restack-ai = {path = "/Users/leawn/Code/github.com/restack/sdk/engine/libraries/python"}
+restack-ai = "^0.0.10"
 
 
 [build-system]
