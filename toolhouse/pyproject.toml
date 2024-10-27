@@ -1,19 +1,19 @@
 [tool.poetry]
-name = "restackio.integrations.toolhouse"
+name = "restack_integrations_toolhouse"
 version = "0.0.1"
 description = "Toolhouse integration for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
 ]
-packages = [{ include = "restackio", from = "src" }]
+packages = [{ include = "src" }]
 
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.13"
-restackio.ai = "^0.0.11"
 pydantic = "^2.9.2"
 toolhouse = "^1.3.0"
+restack_ai = "^0.0.11"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
