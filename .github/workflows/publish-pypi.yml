@@ -1,0 +1,71 @@
+name: Publish Python packages to PyPI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      openai: ${{ steps.check_openai.outputs.changed }}
+      toolhouse: ${{ steps.check_toolhouse.outputs.changed }}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Check OpenAI changes
+      id: check_openai
+      run: |
+        git diff --quiet HEAD^ HEAD -- integrations-python/openai/ || echo "changed=true" >> $GITHUB_OUTPUT
+
+    - name: Check Toolhouse changes
+      id: check_toolhouse
+      run: |
+        git diff --quiet HEAD^ HEAD -- integrations-python/toolhouse/ || echo "changed=true" >> $GITHUB_OUTPUT
+
+  publish:
+    needs: check-changes
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: ['openai', 'toolhouse']
+    if: needs.check-changes.outputs[matrix.package] == 'true'
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Configure Poetry
+      run: |
+        poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+
+    - name: Check if version exists on PyPI
+      id: version_check
+      run: |
+        cd integrations-python/${{ matrix.package }}
+        PACKAGE_NAME=$(poetry version | cut -d' ' -f1)
+        CURRENT_VERSION=$(poetry version -s)
+        if poetry run python -m pip install $PACKAGE_NAME==$CURRENT_VERSION 2>/dev/null; then
+          echo "Version $CURRENT_VERSION already exists on PyPI. Skipping publish."
+          echo "exists=true" >> $GITHUB_OUTPUT
+        else
+          echo "Version $CURRENT_VERSION does not exist on PyPI. Proceeding with publish."
+          echo "exists=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Build and publish
+      if: steps.version_check.outputs.exists != 'true'
+      run: |
+        cd integrations-python/${{ matrix.package }}
+        poetry build
+        poetry publish
