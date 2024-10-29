@@ -1,5 +1,6 @@
 from restack_ai import Restack
 from pydantic import BaseModel
+from .functions.generate_content import gemini_generate_content
 
 
 class GeminiServiceOptions(BaseModel):
@@ -19,7 +20,9 @@ class GeminiServiceInput(BaseModel):
 
 async def gemini_service(input: GeminiServiceInput):
     return await input.client.start_service(
-        functions=[],
+        functions=[
+            gemini_generate_content
+        ],
         options=input.options
     )
 
