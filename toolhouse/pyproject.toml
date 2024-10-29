@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "restack_integrations_toolhouse"
-version = "0.0.1"
+version = "0.0.2"
 description = "Toolhouse integration for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
