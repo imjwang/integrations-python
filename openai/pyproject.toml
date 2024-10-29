@@ -5,8 +5,8 @@ description = "OpenAI integration for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
 ]
-packages = [{ include = "src" }]
-include = ["src/py.typed"]
+packages = [{ include = "restack_integrations_openai", from = "src" }]
+include = ["src/restack_integrations_openai/py.typed"]
 
 readme = "README.md"
 
