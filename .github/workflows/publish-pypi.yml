@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'integrations-python/*/pyproject.toml'
+      - '*/pyproject.toml'
 
 jobs:
   check-changes:
