@@ -22,7 +22,6 @@ class OpenAIChatInput(BaseModel):
     presence_penalty: float | None = None
     frequency_penalty: float | None = None
     tools: list[any] | None = None
-    tool_choice: str | None = None
 
 class OpenAIChatOutput(BaseModel):
     result: ChatCompletion
@@ -47,7 +46,7 @@ def openai_chat_completion_base(input: OpenAIChatInput) -> OpenAIChatOutput:
         "messages": messages,
     }
 
-    for param in ["max_tokens", "temperature", "top_p", "n", "stop", "presence_penalty", "frequency_penalty", "tools", "tool_choice"]:
+    for param in ["max_tokens", "temperature", "top_p", "n", "stop", "presence_penalty", "frequency_penalty", "tools"]:
         if getattr(input, param) is not None:
             chat_params[param] = getattr(input, param)
 
