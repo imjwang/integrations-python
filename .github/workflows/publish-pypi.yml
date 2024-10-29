@@ -9,30 +9,42 @@ jobs:
   check-changes:
     runs-on: ubuntu-latest
     outputs:
-      openai: ${{ steps.check_openai.outputs.changed }}
-      toolhouse: ${{ steps.check_toolhouse.outputs.changed }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
-    - name: Check OpenAI changes
-      id: check_openai
+    - name: Get package directories and check changes
+      id: set-matrix
       run: |
-        git diff --quiet HEAD^ HEAD -- integrations-python/openai/ || echo "changed=true" >> $GITHUB_OUTPUT
-
-    - name: Check Toolhouse changes
-      id: check_toolhouse
-      run: |
-        git diff --quiet HEAD^ HEAD -- integrations-python/toolhouse/ || echo "changed=true" >> $GITHUB_OUTPUT
+        # Define the list of publishable packages
+        PUBLISHABLE_PACKAGES=("openai" "toolhouse" "gemini")
+        
+        packages=()
+        for pkg in "${PUBLISHABLE_PACKAGES[@]}"; do
+          if [ ! -d "integrations-python/$pkg" ]; then
+            continue
+          fi
+          if git diff --quiet HEAD^ HEAD -- "integrations-python/$pkg/"; then
+            continue
+          fi
+          packages+=("\"$pkg\"")
+        done
+        
+        # Ensure we output a valid JSON array even if empty
+        if [ ${#packages[@]} -eq 0 ]; then
+          echo "matrix={\"package\":[]}" >> $GITHUB_OUTPUT
+        else
+          echo "matrix={\"package\":[${packages[*]}]}" >> $GITHUB_OUTPUT
+        fi
 
   publish:
     needs: check-changes
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        package: ['openai', 'toolhouse']
-    if: needs.check-changes.outputs[matrix.package] == 'true'
+      matrix: ${{ fromJson(needs.check-changes.outputs.matrix) }}
+    if: ${{ toJson(matrix.package) != '[]' }}
     steps:
     - uses: actions/checkout@v3
 
