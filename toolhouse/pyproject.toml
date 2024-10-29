@@ -5,7 +5,7 @@ description = "Toolhouse integration for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
 ]
-packages = [{ include = "src" }]
+packages = [{ include = "restack_integrations_toolhouse", from = "src" }]
 
 readme = "README.md"
 
