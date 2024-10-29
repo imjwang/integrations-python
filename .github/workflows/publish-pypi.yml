@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'integrations-python/*/pyproject.toml'
 
 jobs:
   check-changes:
@@ -15,7 +17,7 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Get package directories and check changes
+    - name: Get package directories with version changes
       id: set-matrix
       run: |
         # Define the list of publishable packages
@@ -26,9 +28,17 @@ jobs:
           if [ ! -d "integrations-python/$pkg" ]; then
             continue
           fi
-          if git diff --quiet HEAD^ HEAD -- "integrations-python/$pkg/"; then
+          
+          # Check if pyproject.toml has changed
+          if git diff --quiet HEAD^ HEAD -- "integrations-python/$pkg/pyproject.toml"; then
             continue
           fi
+          
+          # Check if the version line specifically has changed
+          if ! git diff HEAD^ HEAD -- "integrations-python/$pkg/pyproject.toml" | grep -q '^+version[[:space:]]*=[[:space:]]*'; then
+            continue
+          fi
+          
           packages+=("\"$pkg\"")
         done
         
