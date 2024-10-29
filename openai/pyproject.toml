@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "restack_integrations_openai"
-version = "0.0.2"
+version = "0.0.3"
 description = "OpenAI integration for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
