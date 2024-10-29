@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJson(needs.check-changes.outputs.matrix) }}
-    if: ${{ toJson(matrix.package) != '[]' }}
+    if: ${{ fromJson(needs.check-changes.outputs.matrix).package != '[]' }}
     steps:
     - uses: actions/checkout@v3
 
