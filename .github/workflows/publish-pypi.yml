@@ -42,9 +42,10 @@ jobs:
   publish:
     needs: check-changes
     runs-on: ubuntu-latest
+    if: ${{ fromJson(needs.check-changes.outputs.matrix).package[0] }}
     strategy:
       matrix: ${{ fromJson(needs.check-changes.outputs.matrix) }}
-    if: ${{ fromJson(needs.check-changes.outputs.matrix).package != '[]' }}
+      fail-fast: false
     steps:
     - uses: actions/checkout@v3
 
