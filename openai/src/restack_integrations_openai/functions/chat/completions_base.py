@@ -2,6 +2,7 @@ from openai.types.chat import ChatCompletion
 from pydantic import BaseModel
 from ...utils.cost import Price, TokensCount, openai_cost
 from ...utils.client import openai_client
+from typing import Any
 
 
 class OpenAIChatInput(BaseModel):
@@ -21,7 +22,7 @@ class OpenAIChatInput(BaseModel):
     stop: list[str] | None = None
     presence_penalty: float | None = None
     frequency_penalty: float | None = None
-    tools: list[any] | None = None
+    tools: list[Any] | None = None
 
 class OpenAIChatOutput(BaseModel):
     result: ChatCompletion
