@@ -7,10 +7,11 @@ class WebsiteInput(BaseModel):
     url: str
     openai_api_key: str | None = None
     toolhouse_api_key: str | None = None
+    model: str | None = None
 
 
 @function.defn(name="summarize_website")
-async def summarize_website(input: WebsiteInput) -> str:
+async def summarize_website(input: WebsiteInput):
     client = OpenAI(api_key=input.openai_api_key)
     th = toolhouse_client(api_key=input.toolhouse_api_key, provider="openai")
 
@@ -18,9 +19,13 @@ async def summarize_website(input: WebsiteInput) -> str:
         {"role": "user", "content": f"Get the contents of {input.url} and summarize its key value propositions in three bullet points."},
     ]    
 
+    chat_params = {
+        "model": input.model or "gpt-4o",
+        "messages": messages,
+    }
+
     response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=messages,
+        **chat_params,
         tools=th.get_tools()
     )
 

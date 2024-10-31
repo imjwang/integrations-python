@@ -9,6 +9,7 @@ class MailInput(BaseModel):
     to: str
     openai_api_key: str | None = None
     toolhouse_api_key: str | None = None
+    model: str | None = None
 
 
 @function.defn(name="mail_website_summary")
@@ -18,11 +19,15 @@ async def mail_website_summary(input: MailInput) -> str:
 
     messages = [
         {"role": "user", "content": f"Send email to {input.to} with the following subject: {input.subject} and body: {input.body}"},
-    ]   
+    ]  
+
+    chat_params = {
+        "model": input.model or "gpt-4o-mini",
+        "messages": messages,
+    } 
 
     response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=messages,
+       **chat_params,
         tools=th.get_tools()
     )
 

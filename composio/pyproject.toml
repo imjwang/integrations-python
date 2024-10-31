@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "restack_integrations_composio"
-version = "0.0.2"
+version = "0.0.3"
 description = "Composio integration for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"

@@ -1,5 +1,4 @@
 from restack_ai.function import FunctionFailure, log
-from composio import App
 from .get_entity import get_entity, GetEntityInput
 from typing import Optional
 from pydantic import BaseModel
