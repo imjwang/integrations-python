@@ -23,12 +23,12 @@ async def gemini_service(input: GeminiServiceInput):
         functions=[
             gemini_generate_content
         ],
+        task_queue=gemini_task_queue,
         options=input.options
     )
 
 if __name__ == "__main__":
     gemini_service(
         client=Restack(),
-        options=GeminiServiceOptions(rate_limit=100000),
-        task_queue=gemini_task_queue
+        options=GeminiServiceOptions(rate_limit=100000)
     )

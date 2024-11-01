@@ -24,12 +24,12 @@ async def toolhouse_service(input: ToolhouseServiceInput):
             mail_website_summary,
             summarize_website
         ],
+         task_queue=toolhouse_task_queue,
         options=input.options
     )
 
 if __name__ == "__main__":
     toolhouse_service(
         client=Restack(),
-        options=ToolhouseServiceOptions(rate_limit=100000),
-        task_queue=toolhouse_task_queue
+        options=ToolhouseServiceOptions(rate_limit=100000)
     )
