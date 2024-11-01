@@ -1,3 +1,3 @@
-Restack AI python integrations
+# Restack AI integrations for Python
 
-# sdk-python-integrations
+See README.md for each package for more information.
