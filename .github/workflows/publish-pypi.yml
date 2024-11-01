@@ -25,17 +25,17 @@ jobs:
 
           packages=()
           for pkg in "${PUBLISHABLE_PACKAGES[@]}"; do
-            if [ ! -d "integrations-python/$pkg" ]; then
+            if [ ! -d "$pkg" ]; then
               continue
             fi
             
             # Check if pyproject.toml has changed
-            if git diff --quiet HEAD^ HEAD -- "integrations-python/$pkg/pyproject.toml"; then
+            if git diff --quiet HEAD^ HEAD -- "$pkg/pyproject.toml"; then
               continue
             fi
             
             # Check if the version line specifically has changed
-            if ! git diff HEAD^ HEAD -- "integrations-python/$pkg/pyproject.toml" | grep -q '^+version[[:space:]]*=[[:space:]]*'; then
+            if ! git diff HEAD^ HEAD -- "$pkg/pyproject.toml" | grep -q '^+version[[:space:]]*=[[:space:]]*'; then
               continue
             fi
             
@@ -75,7 +75,7 @@ jobs:
       - name: Check if version exists on PyPI
         id: version_check
         run: |
-          cd integrations-python/${{ matrix.package }}
+          cd ${{ matrix.package }}
           PACKAGE_NAME=$(poetry version | cut -d' ' -f1)
           CURRENT_VERSION=$(poetry version -s)
           if poetry run python -m pip install $PACKAGE_NAME==$CURRENT_VERSION 2>/dev/null; then
@@ -89,6 +89,6 @@ jobs:
       - name: Build and publish
         if: steps.version_check.outputs.exists != 'true'
         run: |
-          cd integrations-python/${{ matrix.package }}
+          cd ${{ matrix.package }}
           poetry build
           poetry publish
