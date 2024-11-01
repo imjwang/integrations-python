@@ -30,12 +30,12 @@ async def composio_service(input: ComposioServiceInput):
             initiate_connection,
             is_entity_connected
         ],
+        task_queue=composio_task_queue,
         options=input.options
     )
 
 if __name__ == "__main__":
     composio_service(
         client=Restack(),
-        options=ComposioServiceOptions(rate_limit=100000),
-        task_queue=composio_task_queue
+        options=ComposioServiceOptions(rate_limit=100000)
     )
