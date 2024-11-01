@@ -1,4 +1,4 @@
-from restack_ai.function import FunctionFailure, log
+from restack_ai.function import FunctionFailure
 from .get_entity import get_entity, GetEntityInput
 from typing import Optional
 from pydantic import BaseModel
@@ -33,11 +33,6 @@ def initiate_connection(
            return response
 
         request =  entity.initiate_connection(app_name=input.app_name)
-
-        log.info(
-            f"Open this URL to authenticate: {request.redirectUrl}",
-            {"redirect_url": request.redirectUrl}
-        )
 
         if (input.wait_until_active):
             request.wait_until_active(client=entity.client, timeout=input.wait_until_active)

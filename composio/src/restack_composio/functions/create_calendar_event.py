@@ -5,7 +5,6 @@ from pydantic import BaseModel
 from typing import Optional
 
 from ..utils.toolsets import openai_toolset
-from .initiate_connection import initiate_connection, InitiateConnectionInput
 
 
 class CreateCalendarEventInput(BaseModel):
@@ -20,18 +19,6 @@ async def create_calendar_event(
     input: CreateCalendarEventInput
 ):
     composio_openai_toolset = openai_toolset(entity_id=input.entity_id)
-
-    initiate_connection_response = initiate_connection(
-        input=InitiateConnectionInput(
-            entity_id=input.entity_id,
-            app_name=APP_NAME,
-            composio_api_key=input.composio_api_key,
-            wait_until_active=input.wait_until_active
-        )
-    )
-
-    if (initiate_connection_response["authenticated"] == "no"):
-        return initiate_connection_response
 
     tools = composio_openai_toolset.get_tools(actions=[Action.GOOGLECALENDAR_CREATE_EVENT])
 
