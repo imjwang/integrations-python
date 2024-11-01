@@ -10,7 +10,7 @@ packages = [{ include = "restack_toolhouse", from = "src" }]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
+python = "^3.8"
 pydantic = "^2.9.2"
 toolhouse = "^1.3.0"
 restack_ai = "^0.0.12"
