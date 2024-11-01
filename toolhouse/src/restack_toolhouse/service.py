@@ -2,7 +2,7 @@ from restack_ai import Restack
 from pydantic import BaseModel
 from .functions.send_email import mail_website_summary
 from .functions.summarize_website import summarize_website
-
+from .task_queue import toolhouse_task_queue
 class ToolhouseServiceOptions(BaseModel):
     rate_limit: int
 
@@ -30,5 +30,6 @@ async def toolhouse_service(input: ToolhouseServiceInput):
 if __name__ == "__main__":
     toolhouse_service(
         client=Restack(),
-        options=ToolhouseServiceOptions(rate_limit=100000)
+        options=ToolhouseServiceOptions(rate_limit=100000),
+        task_queue=toolhouse_task_queue
     )
