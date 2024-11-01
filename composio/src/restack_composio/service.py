@@ -5,7 +5,7 @@ from .functions.get_entity import get_entity
 from .functions.get_expected_params_for_user import get_expected_params_for_user
 from .functions.initiate_connection import initiate_connection
 from .functions.is_entity_connected import is_entity_connected
-
+from .task_queue import composio_task_queue
 class ComposioServiceOptions(BaseModel):
     rate_limit: int
 
@@ -36,5 +36,6 @@ async def composio_service(input: ComposioServiceInput):
 if __name__ == "__main__":
     composio_service(
         client=Restack(),
-        options=ComposioServiceOptions(rate_limit=100000)
+        options=ComposioServiceOptions(rate_limit=100000),
+        task_queue=composio_task_queue
     )

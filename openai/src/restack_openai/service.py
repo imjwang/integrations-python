@@ -1,7 +1,7 @@
 from restack_ai import Restack
 from pydantic import BaseModel
 from .functions.chat.completions_base import openai_chat_completion_base
-
+from .task_queue import openai_task_queue
 class OpenAIServiceOptions(BaseModel):
     rate_limit: int
 
@@ -27,5 +27,6 @@ async def openai_service(input: OpenAIServiceInput):
 if __name__ == "__main__":
     openai_service(
         client=Restack(),
-        options=OpenAIServiceOptions(rate_limit=100000)
+        options=OpenAIServiceOptions(rate_limit=100000),
+        task_queue=openai_task_queue
     )

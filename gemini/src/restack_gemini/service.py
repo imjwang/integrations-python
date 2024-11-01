@@ -1,7 +1,7 @@
 from restack_ai import Restack
 from pydantic import BaseModel
 from .functions.generate_content import gemini_generate_content
-
+from .task_queue import gemini_task_queue
 
 class GeminiServiceOptions(BaseModel):
     rate_limit: int
@@ -29,5 +29,6 @@ async def gemini_service(input: GeminiServiceInput):
 if __name__ == "__main__":
     gemini_service(
         client=Restack(),
-        options=GeminiServiceOptions(rate_limit=100000)
+        options=GeminiServiceOptions(rate_limit=100000),
+        task_queue=gemini_task_queue
     )
