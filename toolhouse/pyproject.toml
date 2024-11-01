@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "restack_integrations_toolhouse"
-version = "0.0.3"
-description = "Toolhouse integration for Restack AI"
+name = "restack_toolhouse"
+version = "0.0.4"
+description = "Toolhouse for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
 ]
-packages = [{ include = "restack_integrations_toolhouse", from = "src" }]
+packages = [{ include = "restack_toolhouse", from = "src" }]
 
 readme = "README.md"
 

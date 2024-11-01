@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "restack_integrations_gemini"
-version = "0.0.6"
-description = "Gemini integration for Restack AI"
+name = "restack_gemini"
+version = "0.0.7"
+description = "Gemini for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
 ]
-packages = [{ include = "restack_integrations_gemini", from = "src" }]
-include = ["src/restack_integrations_gemini/py.typed"]
+packages = [{ include = "restack_gemini", from = "src" }]
+include = ["src/restack_gemini/py.typed"]
 
 readme = "README.md"
 
