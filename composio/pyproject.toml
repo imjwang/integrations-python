@@ -12,7 +12,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 pydantic = "^2.9.2"
-restack_ai = "^0.0.19"
+restack_ai = "^0.0.20"
 composio-core = "^0.5.37"
 composio-openai = "^0.5.37"
 
