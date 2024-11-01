@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "restack_google_gemini"
-version = "0.0.19"
+version = "0.0.20"
 description = "Google Gemini for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
