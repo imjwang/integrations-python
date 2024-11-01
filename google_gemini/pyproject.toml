@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "restack_google_gemini"
-version = "0.0.10"
+version = "0.0.19"
 description = "Google Gemini for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
@@ -11,9 +11,9 @@ include = ["src/restack_google_gemini/py.typed"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 pydantic = "^2.9.2"
-restack_ai = "^0.0.17"
+restack_ai = "^0.0.19"
 google-generativeai = "^0.8.3"
 
 [build-system]

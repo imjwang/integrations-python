@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "restack_composio"
-version = "0.0.8"
+version = "0.0.11"
 description = "Composio integration for Restack AI"
 authors = [
     "Restack Team <service@restack.io>"
@@ -10,9 +10,9 @@ packages = [{ include = "restack_composio", from = "src" }]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 pydantic = "^2.9.2"
-restack_ai = "^0.0.17"
+restack_ai = "^0.0.19"
 composio-core = "^0.5.37"
 composio-openai = "^0.5.37"
 
